@@ -13,32 +13,63 @@ matches:
   - trigger: ":espanso"
     replace: "Hi there!"
 
+  - triggers: ['rly']
+    replace: "really"
+    word: true
+    propagate_case: true
+
   - trigger: ":mvh"
     replace: "Med vänlig hälsning \nAlexander Klippel"
 
   - trigger: ":fridens"
     replace: "Fridens liljor \nAlexander"
 
-  - trigger: ":shrugs"
-    replace: "¯\_(ツ)_/¯"
+  - trigger: ":shrug"
+    replace: "¯\\_(ツ)_/¯"
 
   # Outputs public IP address
+  - trigger: ":getip"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "curl ifconfig.me"
+
+  - trigger: ":winip"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "curl ifconfig.me"
+          shell: cmd
+
   - trigger: ":ip"
     replace: "{{output}}"
     vars:
       - name: output
         type: shell
         params:
-          cmd: "curl 'https://api.ipify.org'"
+          cmd: "curl addr.dev"
+          shell: cmd
 
-  # Outputs the current weather for your location
-  - trigger: ":weather"
+  # get bitcoin price
+  - trigger: ":bitcoin"
     replace: "{{output}}"
     vars:
       - name: output
         type: shell
         params:
-          cmd: "curl 'http://wttr.in/?format=3'"
+          cmd: "curl -s https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd | jq '.bitcoin.usd' | awk '{ printf \"$%.2f\", $1 }'"
+
+  - trigger: ":wttrin"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: 'curl https://wttr.in?format="%l:+%c+%t\n"'
 
   # Print the current date
   - trigger: ":date"
