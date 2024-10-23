@@ -267,3 +267,11 @@ matches:
     vars:
       - name: "clipboard"
         type: "clipboard"
+
+  - trigger: ":mittip"
+    replace: "{{output}}"
+    vars:
+    - name: output
+      type: shell
+      params:
+        cmd: Invoke-WebRequest api.ipify.org -UseBasicParsing -Headers @{"accept"="text/plain"} | Select-Object -Expand Content
