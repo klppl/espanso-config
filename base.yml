@@ -1,0 +1,90 @@
+# espanso match file
+
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+# You can use this file to define the base matches (aka snippets)
+# that will be available in every application when using espanso.
+
+# Matches are substitution rules: when you type the "trigger" string
+# it gets replaced by the "replace" string.
+matches:
+  # Simple text replacement
+  - trigger: ":espanso"
+    replace: "Hi there!"
+
+  # NOTE: espanso uses YAML to define matches, so pay attention to the indentation!
+
+  # But matches can also be dynamic:
+
+  # Print the current date
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%d-%m-%Y"
+
+  # Print the output of a shell command
+  - trigger: ":shell"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo 'Hello from your shell'"
+
+  # Outputs public IP address
+  - trigger: ":ip"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "curl 'https://api.ipify.org'"
+
+  # Quick search, formulates the URL params for searching a given website
+  - triggers: [:srch-ddg, :search-duckduckgo]
+    replace: 'https://duckduckgo.com/?q='
+  - triggers: [:srch-wiki, :search-wikipedia]
+    replace: 'https://en.wikipedia.org/w/?search='
+  - triggers: [:srch-gh, :search-github]
+    replace: 'https://github.com/search?q='
+  - triggers: [:srch-red, :search-reddit]
+    replace: 'https://www.reddit.com/search/?q='
+  - triggers: [:srch-yt, :search-youtube]
+    replace: 'https://youtube.com/results?q='
+  - triggers: [:srch-maps, :search-maps]
+    replace: 'https://www.google.com/maps/search/'
+  - triggers: [:srch-goo, :search-google]
+    replace: 'https://google.com/search?q='
+
+  # Auto close brackets, quotes and formatting modifiers, and put cursor in center
+  - trigger: ':('
+    replace: '($|$)'
+  - trigger: ':['
+    replace: '[$|$]'
+  - trigger: ':{'
+    replace: '{$|$}'
+  - trigger: ':<'
+    replace: '<$|$>'
+  - trigger: ':`'
+    replace: '`$|$`'
+  - trigger: ":\'"
+    replace: "\'$|$\'"
+  - trigger: ':"'
+    replace: '"$|$"'
+  - trigger: ':_'
+    replace: '_$|$_'
+  - trigger: ':*'
+    replace: '*$|$*'
+  - trigger: ':-'
+    replace: '-$|$-'
+
+  # Personal email notes
+  - trigger: :fl
+    replace: "Fridens liljor,\nAlexander\n"
+
+  - trigger: :yt
+    replace: "https://www.youtube.com/feed/subscriptions"
+  # And much more! For more information, visit the docs: https://espanso.org/docs/
